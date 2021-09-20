@@ -10,8 +10,6 @@ def perform_apriori(data, support_count):
     apriori_data = pd.DataFrame(
         {'items': single_items.index, 'support_count': single_items.values.astype(int), 'set_size': 1})
 
-    print(apriori_data)
-
     data['set_size'] = data['items'].astype(str).str.count(",") + 1
 
     data['items'] =  (data['items'].apply(lambda row: set(map(int, row.split(",")))))
@@ -34,5 +32,5 @@ def perform_apriori(data, support_count):
 if __name__ == '__main__':
     table = pd.read_csv(r'datasets\order_products__train_column.csv', engine= 'python',usecols=range(0, 42), sep=", ", index_col=False)
     start = time()
-    print(perform_apriori(data=table, support_count=50))
+    print(perform_apriori(data=table, support_count=500))
     print(time() - start)
