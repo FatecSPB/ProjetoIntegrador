@@ -30,7 +30,7 @@ def perform_apriori(data, support_count):
     return apriori_data
 
 if __name__ == '__main__':
-    table = pd.read_csv(r'datasets\order_products__train_column.csv', engine= 'python',usecols=range(0, 42), sep=", ", index_col=False)
+    table = pd.read_csv(r'datasets\order_products__train_column.csv', engine= 'python', sep=", ", index_col=False)
     start = time()
     print(perform_apriori(data=table, support_count=500))
     print(time() - start)
