@@ -4,15 +4,16 @@ import pandas as pd
 from time import time
 
 def perform_apriori(data, support_count):
-    single_items = (data['items'].astype(str).str.split(",", expand=True))\
-        .apply(pd.value_counts).sum(axis=1).where(lambda value: value > support_count)
+
+    single_items = (data['items'].str.split(",", expand=True))\
+        .apply(pd.value_counts).sum(axis=1).where(lambda value: value > support_count).dropna()
 
     apriori_data = pd.DataFrame(
-        {'items': single_items.index, 'support_count': single_items.values.astype(int), 'set_size': 1})
+        {'items': single_items.index.astype(int), 'support_count': single_items.values, 'set_size': 1})
 
-    data['set_size'] = data['items'].astype(str).str.count(",") + 1
+    data['set_size'] = data['items'].str.count(",") + 1
 
-    data['items'] =  (data['items'].apply(lambda row: set(map(int, row.split(",")))))
+    data['items'] = data['items'].apply(lambda row: set(map(int, row.split(","))))
 
     single_items_set = set(single_items.index.astype(int))
 
